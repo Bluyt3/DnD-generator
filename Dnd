@@ -1,0 +1,323 @@
+//universal variables
+var strength=5;
+var desception=5;
+var inteligence=5;
+var charisma=5;
+var constitution=5;
+var wisdom=5;
+var alpha="abcdefghijklmnopqrstuvwxyz";
+
+
+
+//makes character selection system
+function start(){
+    var name= readLine("what is your name?");
+    var age= readInt("what is your age?");
+    name= encodedName(name);
+    println(name);
+    println(age);
+    name+=".";
+    character(name,age);
+    println("strength= "+strength);
+    println("desception= "+desception);
+    println("wisdom= "+wisdom);
+    println("charisma= "+charisma);
+    println("constitution= "+constitution);
+    println("inteligence= "+inteligence);
+}
+
+//for privacy, we encode the name
+function encodedName(name){
+    var newName="";
+    for(var i=0; i<name.length;i++){
+        var key= name.charAt(i);
+        var index= alpha.indexOf(key);
+        var shift= Randomizer.nextInt(0,25-index);
+        var encoded= alpha.charAt(index+shift);
+        newName+=encoded;
+    }
+    return newName;
+}
+
+
+
+//figures out which player they will be based off age and name length
+function character(name,age){
+    var last= name.indexOf(".");
+    if(last>=5&&age>=30){
+        mage();
+    }else if(last>=5){
+        warrior();
+    }else if(age>=30){
+        singer();
+    }else{
+        theif();
+    }
+}
+
+
+//creates character for mage
+function mage(){
+    println("You are a Mage!");
+    var mageNames=["Merlin","Olaf","Aldus","Eizo","Belamir"];
+    var randomizer=Randomizer.nextInt(0,4);
+    var name= mageNames[randomizer];
+    //asks questions to see what class they are
+    var ask= readBoolean("do you value others over yourself?");
+    if(ask){
+        var magic="Healing";
+    }else{
+        var q2= readBoolean("Would you consider yourself adventurous?");
+        if(q2){
+            var magic="Fire";
+        }else{
+            var q3= readBoolean("Are you willing to do anything to get what you want?");
+            if(q3){
+                var magic="Poison";
+            }else{
+                var magic="Ice";
+            }
+        }
+    }
+    println("name= "+ name);
+    println("magic= "+ magic);
+    //creates statistic for the character to be used in DnD
+    for(var i=0;i<6;i++){
+    
+    if(magic=="Healing"){
+        var shift= Randomizer.nextInt(0,5);
+    }
+    if(magic=="Fire"){
+        var shift=Randomizer.nextInt(0,7);
+    }
+    if(magic=="Poison"){
+        var shift= Randomizer.nextInt(0,6);
+    }
+    if(magic=="Ice"){
+        var shift= Randomizer.nextInt(0,3);
+    }
+    if(i>3){
+        inteligence=inteligence+shift+3;
+        wisdom=wisdom+shift+3;
+    }else if(i==2){
+        strength=strength+shift;
+    }else if(i==1){
+        desception=desception+shift;
+    }else if(i==3){
+        charisma=charisma+shift;
+    }else if(i==0){
+        constitution=constitution+shift;
+    }
+    }
+    
+    Image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnbkfQzz0eMTa0JPhxb8RBi543zQb37tLCDQ&usqp=CAU", "Mage",name);
+}
+
+
+
+//creates the function for a warrior
+function warrior(){
+    println("You are a Warrior!");
+    var warNames=["Charles","Godrick","Lionheart","Escanor","Edward","Arthur"];
+    var randomizer= Randomizer.nextInt(0,5);
+    var name=warNames[randomizer];
+    //asks questions to see what class they are
+    var q1= readBoolean("would you decribe yourself as brave?");
+    if(q1){
+        var style="Way of the Wind";
+    }else{
+        var q2= readBoolean("are you one to sacrifice for others?");
+        if(q2){
+            var style="Way of the Earth";
+        }else{
+            var q3= readBoolean("are you able to adapt easily?");
+            if(q3){
+                var style= "Way of the Sea";
+            }else{
+                var style="Way of the Ash";
+            }
+        }
+    }
+    println("name= "+name);
+    println("style= "+style);
+    //creates statistic for the character to be used in DnD
+    for(var i=0;i<6;i++){
+    var shift= Randomizer.nextInt(0,8);
+    
+    if(i>3){
+        strength=strength+shift+3;
+        constitution=constitution+shift+3;
+    }else if(i==2){
+        inteligence=inteligence+shift;
+    }else if(i==1){
+        desception=desception+shift;
+    }else if(i==3){
+        wisdom=wisdom+shift;
+    }else if(i==0){
+        charisma=charisma+shift;
+    }
+    }
+    
+    Image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlo9HgUyMASIfIZJKXxBzzX_Pxq6vNM1SmMg&usqp=CAU", "Warrior",name);
+}
+
+
+
+//creates character for bard
+function singer(){
+    println("You are a Bard!");
+    var bardNames=["Laria","Archie","Duke","Lucky","Edmund","Romeo"];
+    var random= Randomizer.nextInt(0,5);
+    var name= bardNames[random];
+    //asks questions to see what class they are
+    var q1= readBoolean("would you find yourself in trouble a lot?");
+    if(q1){
+        var type="Combat"
+    }else{
+        var q2= readBoolean("are you surrounded by loved ones?");
+        if(q2){
+            var type= "Healing";
+        }else{
+            var q3= readBoolean("Can you get out of a sticky situation?");
+            if(q3){
+                var type="Sly";
+            }else{
+                var type="Drunk";
+            }
+        }
+    }
+    println("name= "+name);
+    println("type= "+type);
+    //creates statistic for the character to be used in DnD
+    for(var i=0;i<6;i++){
+    
+    if(type=="Combat"){
+        var shift= Randomizer.nextInt(0,10);
+    }
+    if(type=="Healing"){
+        var shift=Randomizer.nextInt(0,5);
+    }
+    if(type=="Desception"){
+        var shift= Randomizer.nextInt(0,6);
+    }
+    if(type=="Drunk"){
+        var shift= Randomizer.nextInt(0,3);
+    }
+    if(i>3){
+        inteligence=inteligence+shift+3;
+        charisma=charisma+shift+3;
+    }else if(i==2){
+        strength=strength+shift;
+    }else if(i==1){
+        desception=desception+shift;
+    }else if(i==3){
+        wisdom=wisdom+shift;
+    }else if(i==0){
+        constitution=constitution+shift;
+    }
+    }
+    
+    Image("data:image/jpeg;base64,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", "Bard",name);
+}
+
+
+
+//creates character for a theif
+function theif(){
+    println("You are a Thief!");
+    var theifNames= ["Bandit","Robin","Franky","Bailey","Reaper"];
+    var random= Randomizer.nextInt(0,4);
+    var name= theifNames[random];
+    //asks questions to see what class they are
+    var q1= readBoolean("will you be loyal to your crew?");
+    if(q1){
+        var type="stoic";
+    }else{
+        var q2= readBoolean("would you be able to get away if caught?");
+        if(q2){
+            var type="swift";
+            
+        }else{
+            var q3= readBoolean("are you an aspiring guild member?");
+            if(q3){
+                var type= "ambitious";
+            }else{
+                var type="cunning";
+            }
+        }
+    }
+    println("name= "+name);
+    println("type= "+type);
+    
+    //creates statistic for the character to be used in DnD, unique to class
+    for(var i=0;i<6;i++){
+    
+    if(type=="stoic"){
+        var shift= Randomizer.nextInt(0,4);
+    }
+    if(type=="swift"){
+        var shift=Randomizer.nextInt(0,5);
+    }
+    if(type=="ambitious"){
+        var shift= Randomizer.nextInt(0,9);
+    }
+    if(type=="cunning"){
+        var shift= Randomizer.nextInt(0,3);
+    }
+    if(i>3){
+        desception=desception+shift+3;
+        charisma=charisma+shift+3;
+    }else if(i==2){
+        strength=strength+shift;
+    }else if(i==1){
+        inteligence=inteligence+shift;
+    }else if(i==3){
+        wisdom=wisdom+shift;
+    }else if(i==0){
+        constitution=constitution+shift;
+    }
+    }
+    
+    
+    Image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiFDuA7G_0RhY8t6oNYPWw4jyktR6S86X2Dg&usqp=CAU","Theif", name);
+}
+
+//adds an image and text based on the url and class that is imputted respectively as well as adding bar graph for the stats
+function Image(url, sword, name){
+    var image= new WebImage(url);
+    image.setPosition(130,100);
+    image.setSize(150,200);
+    add(image);
+    
+    var text= new Text(name+", You are a "+sword +"!");
+    text.setPosition(55,80);
+    add(text);
+    
+    var str= new Rectangle(55,strength*4);
+    str.setPosition(20, getHeight()-140);
+    add(str);
+    
+    var desc= new Rectangle(55,desception*4);
+    desc.setPosition(80,getHeight()-140);
+    add(desc);
+    
+    var wis= new Rectangle(55,wisdom*4);
+    wis.setPosition(140,getHeight()-140);
+    add(wis);
+    
+    var char= new Rectangle(55, charisma*4);
+    char.setPosition(200,getHeight()-140);
+    add(char);
+    
+    var con= new Rectangle(55, constitution*4);
+    con.setPosition(260,getHeight()-140);
+    add(con);
+    
+    var int= new Rectangle(55, inteligence*4);
+    int.setPosition(320,getHeight()-140);
+    add(int);
+    
+    var attributes= new Text("Str. desc. wis. char. con. int.", "20pt Arial");
+    attributes.setPosition(30,getHeight()-145);
+    add(attributes);
+}
